@@ -19,10 +19,10 @@ module SubdomainsBrute
   def self.get_subname
   	subnames = []
   	ns_file = File.expand_path('../../../vendor', __FILE__) + "/subnames.txt"
-    #puts ns_file
   	File.read(ns_file).split("\n").each do |line|
   		line.strip!
-  		if not line.nil? or not line == ""
+      puts line == ""
+  		if not line.nil? and not line == ""
   			subnames << line
   		end
   	end
@@ -35,7 +35,7 @@ module SubdomainsBrute
   	ns_file = File.expand_path('../../../vendor', __FILE__) + "/next_sub.txt"
   	File.read(ns_file).split("\n").each do |line|
   		line.strip!
-  		if not line.nil? or not line == ""
+  		if not line.nil? and not line == ""
   			nextnames << line
   		end
   	end
