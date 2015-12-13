@@ -4,7 +4,7 @@ module SubdomainsBrute
   # 获取预定的 nameserver
   def self.get_ns
   	ns = []
-  	ns_file = "res/dns_servers.txt"
+  	ns_file = File.expand_path('../../../vendor', __FILE__) + "/dns_servers.txt"
   	File.read(ns_file).split("\n").each do |line|
   		line.strip!
   		begin
@@ -18,7 +18,8 @@ module SubdomainsBrute
   # 获取预定的 sub domains
   def self.get_subname
   	subnames = []
-  	ns_file = "res/subnames.txt"
+  	ns_file = File.expand_path('../../../vendor', __FILE__) + "/subnames.txt"
+    puts ns_file
   	File.read(ns_file).split("\n").each do |line|
   		line.strip!
   		if not line.nil? or not line == ""
@@ -31,7 +32,7 @@ module SubdomainsBrute
   # 获取域名的 next_name
   def self.get_nextname
   	nextnames = []
-  	ns_file = "res/next_sub.txt"
+  	ns_file = File.expand_path('../../../vendor', __FILE__) + "/next_sub.txt"
   	File.read(ns_file).split("\n").each do |line|
   		line.strip!
   		if not line.nil? or not line == ""
