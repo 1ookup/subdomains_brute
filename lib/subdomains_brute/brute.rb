@@ -8,7 +8,7 @@ module SubdomainsBrute
   	def initialize(root_domain, option = {})
   		@root_domain = root_domain
   		@option = option
-  		@option[:thread_num] ||= 200
+  		@option[:thread_num] ||= 50
   		@option[:sub_names] ||= SubdomainsBrute::get_subname
   		@option[:next_names] ||= SubdomainsBrute::get_nextname
   		@option[:ns] ||= get_root_domain_ns
@@ -28,10 +28,7 @@ module SubdomainsBrute
   		dns.each_resource(domain, Resolv::DNS::Resource::IN::NS) do |nameserver| 
 				ns += get_ip_by_name(nameserver.name)
 			end
-			ns.uniq!
-			if ns.empty?
-				ns += SubdomainsBrute::get_ns
-			end
+			ns += SubdomainsBrute::get_ns
 			ns
   	end
 
@@ -56,6 +53,7 @@ module SubdomainsBrute
           ip << addr.to_s
         end
       rescue 
+        @progressbar.progress("Error: #{$!}")
         error_count += 1
         sleep 1
         retry if error_count >= 5
