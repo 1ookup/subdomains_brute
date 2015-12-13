@@ -21,7 +21,6 @@ module SubdomainsBrute
   	ns_file = File.expand_path('../../../vendor', __FILE__) + "/subnames.txt"
   	File.read(ns_file).split("\n").each do |line|
   		line.strip!
-      puts line == ""
   		if not line.nil? and not line == ""
   			subnames << line
   		end
