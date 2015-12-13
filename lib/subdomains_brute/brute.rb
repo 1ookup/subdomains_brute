@@ -15,12 +15,13 @@ module SubdomainsBrute
   		@max_level = 5					#最大爆破域名级别
   		@init_level = 2
   		@current_level = 2			#当前爆破域名级别
+      @domains_count = 0 
   		@ret = {}
-  		@ret[1] = []
   		get_root_domain_ip
   		@progressbar = nil
   	end
 
+    private
   	def get_root_domain_ns
   		ns = []
   		dns = Resolv::DNS.new
@@ -33,6 +34,7 @@ module SubdomainsBrute
   	end
 
   	def get_root_domain_ip
+      @ret[1] = []
   		get_ip_by_name(@root_domain).each do |ip|
   			@ret[1] << {name: @root_domain, host: ip}
   		end
@@ -62,6 +64,7 @@ module SubdomainsBrute
   		ip
   	end
 
+    public
   	def run
   		queue = Queue.new
   		threads = []
@@ -125,7 +128,6 @@ module SubdomainsBrute
   	end
 
   	def get_domains_count
-  		@domains_count = 0 
   		@init_level.upto(@max_level) do |level|
   			@ret[level].each do |domain|
   				@domains_count += 1
