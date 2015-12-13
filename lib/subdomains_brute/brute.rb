@@ -50,9 +50,17 @@ module SubdomainsBrute
   		else
   			dns = Resolv::DNS.new(:nameserver => ns)
   		end
-  		dns.each_address(name) do |addr| 
-  			ip << addr.to_s
-  		end
+      error_count = 0
+      begin
+        dns.each_address(name) do |addr| 
+          ip << addr.to_s
+        end
+      rescue 
+        error_count += 1
+        sleep 1
+        retry if error_count >= 5
+      end
+  		
   		ip
   	end
 
