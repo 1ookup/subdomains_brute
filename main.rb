@@ -8,7 +8,9 @@ require "awesome_print"
 domain = "nyist.edu.cn"
 ns = ["114.114.114.114", "8.8.8.8"]
 baidu = SubdomainsBrute::Brute.new(domain, {ns: ns, thread_num: 200})
-baidu.run
+baidu.run do |host|
+	ap host
+end
 2.upto(5) do |level|
 	puts "#{level}级域名: " if baidu.ret[level].size > 0
 	baidu.ret[level].each do |domain|
