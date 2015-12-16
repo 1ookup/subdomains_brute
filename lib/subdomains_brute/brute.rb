@@ -114,6 +114,7 @@ module SubdomainsBrute
   							if @ret[level].select { |domain| domain[:host] == ip }.size < 10
   								@ret[level] << {name: name, host: ip}
   								@progressbar.log("#{name}: #{ip}")
+                  yield @ret[level].last if block_given?
   							end
   							mutex.unlock
   						end
